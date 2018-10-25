@@ -12,7 +12,7 @@
 		<tr>
 			<th>no</th><th>name</th><th>price</th><th>주문</th>
 		</tr>
-		<c:forEach var="item" items="${list}">
+		
 		<tr>
 			<td>${item.no}</td> <!-- item.getNo( --> 
 			<td>${item.name}</td>
