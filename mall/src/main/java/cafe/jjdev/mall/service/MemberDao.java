@@ -90,5 +90,8 @@ public class MemberDao {
         
         return loginResult;
 	}
-	
+	//한명의 회원정보
+	public Member selectMember(String id) {
+		return null;
+	}
 }
