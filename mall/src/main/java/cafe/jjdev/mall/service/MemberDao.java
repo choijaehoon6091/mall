@@ -33,7 +33,6 @@ public class MemberDao {
 
 	//멤버 입력 메서드
 	public int insertMember(Member member) {
-		
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -51,15 +50,14 @@ public class MemberDao {
             preparedStatement.close();
             connection.close();
 	  	    
-		}catch(Exception exception) {
+		} catch(Exception exception) {
             exception.printStackTrace();
         } finally {
             this.close(connection, preparedStatement, resultSet);
         }
         
 		return 0;
-	}
-	
+	}	
 	
 	//멤버로그인 처리
 	public boolean loginMember(Member member) {
@@ -82,16 +80,38 @@ public class MemberDao {
             	loginResult = true;
             }
             
-		}catch(Exception exception) {
+		} catch(Exception exception) {
             exception.printStackTrace();
         } finally {
             this.close(connection, preparedStatement, resultSet);
         }
-        
         return loginResult;
 	}
+	
 	//한명의 회원정보
 	public Member selectMember(String id) {
-		return null;
+		Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Member member = new Member();
+        try {
+            connection = this.getConnection();
+            preparedStatement = connection.prepareStatement("select * from member where id=?");
+            preparedStatement.setString(1, member.getId());
+            resultSet = preparedStatement.executeQuery();
+            
+            if(resultSet.next()) {
+            	member = new Member();
+            	member.setId(resultSet.getString("id"));
+            	member.setPw(resultSet.getString("pw"));
+            	member.setLevel(resultSet.getInt("level"));	
+            }
+            
+		} catch(Exception exception) {
+            exception.printStackTrace();
+        } finally {
+            this.close(connection, preparedStatement, resultSet);
+        }      
+        return member;
 	}
 }
